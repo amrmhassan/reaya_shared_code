@@ -5,4 +5,5 @@ class Collections {
 
   //? pharmacies
   static const String pharmacyRequests = 'pharmacyRequests';
+  static const String pharmacies = 'pharmacies';
 }
