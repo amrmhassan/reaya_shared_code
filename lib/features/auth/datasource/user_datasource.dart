@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:reaya_shared_code/constants/collections.dart';
+import 'package:reaya_shared_code/features/auth/models/user_model.dart';
 import 'package:reaya_shared_code/init/runt_time_variables.dart';
-import 'package:reaya_shared_code/models/auth/user_model.dart';
 
 class UserDatasource {
   Future<UserModel?> getUserById(String? id) async {
