@@ -10,7 +10,7 @@ class UserModel {
   @JsonValue('No Name')
   final String fullName;
   final String address;
-  final String type;
+  final UserType type;
   final DateTime signedUpAt;
   final String phone;
 
@@ -29,7 +29,12 @@ class UserModel {
 }
 
 enum UserType {
+  @JsonValue('pharmacist')
   pharmacist,
+  @JsonValue('user')
   user,
+  @JsonValue('doctor')
   doctor,
+  @JsonValue('admin')
+  admin,
 }

@@ -11,7 +11,7 @@ UserModel _$UserModelFromJson(Map<String, dynamic> json) => UserModel(
       email: json['email'] as String,
       fullName: json['fullName'] as String? ?? 'No Name',
       address: json['address'] as String,
-      type: json['type'] as String,
+      type: $enumDecode(_$UserTypeEnumMap, json['type']),
       signedUpAt:
           const DateTimeConverter().fromJson(json['signedUpAt'] as String),
       phone: json['phone'] as String,
@@ -22,7 +22,14 @@ Map<String, dynamic> _$UserModelToJson(UserModel instance) => <String, dynamic>{
       'email': instance.email,
       'fullName': instance.fullName,
       'address': instance.address,
-      'type': instance.type,
+      'type': _$UserTypeEnumMap[instance.type]!,
       'signedUpAt': const DateTimeConverter().toJson(instance.signedUpAt),
       'phone': instance.phone,
     };
+
+const _$UserTypeEnumMap = {
+  UserType.pharmacist: 'pharmacist',
+  UserType.user: 'user',
+  UserType.doctor: 'doctor',
+  UserType.admin: 'admin',
+};
