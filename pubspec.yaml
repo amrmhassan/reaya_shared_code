@@ -27,6 +27,8 @@ dependencies:
   source_gen: ^1.4.0
   analyzer: ^6.2.0
   dart_id: ^1.0.0
+  image_picker: ^1.0.4
+  firebase_storage: ^11.3.0
 
 dev_dependencies:
   flutter_test:

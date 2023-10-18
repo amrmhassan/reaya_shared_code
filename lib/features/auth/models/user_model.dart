@@ -10,11 +10,11 @@ class UserModel {
   @JsonValue('No Name')
   final String fullName;
   final String address;
-  final UserType type;
+  UserType type;
   final DateTime signedUpAt;
   final String phone;
 
-  const UserModel({
+  UserModel({
     required this.id,
     required this.email,
     this.fullName = 'No Name',
@@ -26,6 +26,7 @@ class UserModel {
   factory UserModel.fromJson(Map<String, dynamic> json) =>
       _$UserModelFromJson(json);
   Map<String, dynamic> toJson() => _$UserModelToJson(this);
+  String get firstName => fullName.split(' ').first;
 }
 
 enum UserType {

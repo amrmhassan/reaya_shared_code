@@ -16,6 +16,15 @@ PharmacyModel _$PharmacyModelFromJson(Map<String, dynamic> json) =>
       personnel: (json['personnel'] as List<dynamic>)
           .map((e) => PharmacyPerson.fromJson(e as Map<String, dynamic>))
           .toList(),
+      shortDesc: json['shortDesc'] as String?,
+      longDescDesc: json['longDescDesc'] as String?,
+      cover: json['cover'] as String?,
+      icon: json['icon'] as String?,
+      location: json['location'] == null
+          ? null
+          : LocationModel.fromJson(json['location'] as Map<String, dynamic>),
+      status: $enumDecodeNullable(_$PharmacyStatusEnumMap, json['status']) ??
+          PharmacyStatus.onCreation,
     );
 
 Map<String, dynamic> _$PharmacyModelToJson(PharmacyModel instance) =>
@@ -23,9 +32,23 @@ Map<String, dynamic> _$PharmacyModelToJson(PharmacyModel instance) =>
       'id': instance.id,
       'name': instance.name,
       'address': instance.address,
+      'shortDesc': instance.shortDesc,
+      'longDescDesc': instance.longDescDesc,
       'createdAt': const DateTimeConverter().toJson(instance.createdAt),
       'personnel': instance.personnel.map((e) => e.toJson()).toList(),
+      'status': _$PharmacyStatusEnumMap[instance.status]!,
+      'location': instance.location?.toJson(),
+      'icon': instance.icon,
+      'cover': instance.cover,
     };
+
+const _$PharmacyStatusEnumMap = {
+  PharmacyStatus.onCreation: 'onCreation',
+  PharmacyStatus.onHold: 'onHold',
+  PharmacyStatus.reviewPending: 'reviewPending',
+  PharmacyStatus.accepted: 'accepted',
+  PharmacyStatus.refused: 'refused',
+};
 
 PharmacyPerson _$PharmacyPersonFromJson(Map<String, dynamic> json) =>
     PharmacyPerson(
