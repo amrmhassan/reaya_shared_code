@@ -11,13 +11,14 @@ class PharmacyModel {
   final String name;
   final String address;
   final String? shortDesc;
-  final String? longDescDesc;
+  final String? longDesc;
   final DateTime createdAt;
   final List<PharmacyPerson> personnel;
   final PharmacyStatus status;
   final LocationModel? location;
   final String? icon;
   final String? cover;
+
   const PharmacyModel({
     required this.id,
     required this.name,
@@ -25,7 +26,7 @@ class PharmacyModel {
     required this.createdAt,
     required this.personnel,
     required this.shortDesc,
-    required this.longDescDesc,
+    required this.longDesc,
     this.cover,
     this.icon,
     this.location,

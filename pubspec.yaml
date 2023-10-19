@@ -29,6 +29,8 @@ dependencies:
   dart_id: ^1.0.0
   image_picker: ^1.0.4
   firebase_storage: ^11.3.0
+  permission_handler: ^11.0.1
+  geolocator: ^10.1.0
 
 dev_dependencies:
   flutter_test:

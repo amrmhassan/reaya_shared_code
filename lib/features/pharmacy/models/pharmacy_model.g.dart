@@ -17,7 +17,7 @@ PharmacyModel _$PharmacyModelFromJson(Map<String, dynamic> json) =>
           .map((e) => PharmacyPerson.fromJson(e as Map<String, dynamic>))
           .toList(),
       shortDesc: json['shortDesc'] as String?,
-      longDescDesc: json['longDescDesc'] as String?,
+      longDesc: json['longDescDesc'] as String?,
       cover: json['cover'] as String?,
       icon: json['icon'] as String?,
       location: json['location'] == null
@@ -33,7 +33,7 @@ Map<String, dynamic> _$PharmacyModelToJson(PharmacyModel instance) =>
       'name': instance.name,
       'address': instance.address,
       'shortDesc': instance.shortDesc,
-      'longDescDesc': instance.longDescDesc,
+      'longDescDesc': instance.longDesc,
       'createdAt': const DateTimeConverter().toJson(instance.createdAt),
       'personnel': instance.personnel.map((e) => e.toJson()).toList(),
       'status': _$PharmacyStatusEnumMap[instance.status]!,
