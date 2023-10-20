@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dart_id/dart_id.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:reaya_shared_code/features/notifications/send_notification_.dart';
+import 'package:reaya_shared_code/features/pharmacy/datasource/pharmacy_datasource.dart';
 import 'package:reaya_shared_code/utils/errors/custom_exception.dart';
 import 'package:reaya_shared_code/init/runt_time_variables.dart';
 import 'package:shared_code/shared_code.dart';
@@ -15,7 +17,7 @@ class PharmacyRequestsDatasource {
   final FirebaseStorageDatasource _firebaseStorageDatasource =
       FirebaseStorageDatasource();
 
-  void validate({
+  void _validate({
     required String name,
     required String phone,
     required String address,
@@ -58,7 +60,7 @@ class PharmacyRequestsDatasource {
     required List<File> files,
     required String pharmacyId,
   }) async {
-    validate(
+    _validate(
       name: name,
       phone: phone,
       address: address,
@@ -76,7 +78,7 @@ class PharmacyRequestsDatasource {
       state: RequestModelState.pending,
       statedAt: now,
     );
-    List<String> images = await uploadImages(files);
+    List<String> images = await _uploadImages(files);
     try {
       String id = DartID().generate();
       PharmacyRequestModel model = PharmacyRequestModel(
@@ -96,12 +98,13 @@ class PharmacyRequestsDatasource {
           .collection(Collections.pharmacyRequests)
           .doc(id)
           .set(model.toJson());
+      await _sendPharmacyNotification(pharmacyId);
     } catch (e) {
       await _firebaseStorageDatasource.deleteImages(images);
     }
   }
 
-  Future<List<String>> uploadImages(List<File> files) async {
+  Future<List<String>> _uploadImages(List<File> files) async {
     List<String> images = [];
     for (var file in files) {
       String imageId = DartID().generate();
@@ -113,5 +116,30 @@ class PharmacyRequestsDatasource {
       images.add(url);
     }
     return images;
+  }
+
+  Future<void> _sendPharmacyNotification(String id) async {
+    PharmacyDatasource datasource = PharmacyDatasource();
+    var ids = await datasource.getPharmacyStuff(id);
+    if (ids == null) return;
+    for (var id in ids) {
+      await SendNotificationApi.sendNotification(
+        userId: id,
+        title: 'طلبية جديدة',
+        body: "برجاء مراجعة طلبياتك",
+        payload: {},
+      );
+    }
+  }
+
+  Future<List<PharmacyRequestModel>> loadPharmacyRequests(String id) async {
+    var docs = (await FirebaseFirestore.instance
+            .collection(Collections.pharmacyRequests)
+            .where('pharmacyId', isEqualTo: id)
+            .get())
+        .docs;
+    var models =
+        docs.map((e) => PharmacyRequestModel.fromJson(e.data())).toList();
+    return models;
   }
 }
