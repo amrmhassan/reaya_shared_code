@@ -27,4 +27,14 @@ class UserDatasource {
         .doc(userModel.id)
         .set(userModel.toJson());
   }
+
+  Future<List<UserModel>> getAdmins() async {
+    var docs = (await FirebaseFirestore.instance
+            .collection(Collections.users)
+            .where('userType', isEqualTo: UserType.admin.name)
+            .get())
+        .docs;
+    var users = docs.map((e) => UserModel.fromJson(e.data())).toList();
+    return users;
+  }
 }

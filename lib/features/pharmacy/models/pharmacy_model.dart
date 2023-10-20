@@ -14,12 +14,13 @@ class PharmacyModel {
   final String? longDesc;
   final DateTime createdAt;
   final List<PharmacyPerson> personnel;
-  final PharmacyStatus status;
+  PharmacyStatus status;
   final LocationModel? location;
   final String? icon;
   final String? cover;
+  final List<String> usersIds;
 
-  const PharmacyModel({
+  PharmacyModel({
     required this.id,
     required this.name,
     required this.address,
@@ -27,6 +28,7 @@ class PharmacyModel {
     required this.personnel,
     required this.shortDesc,
     required this.longDesc,
+    required this.usersIds,
     this.cover,
     this.icon,
     this.location,
@@ -70,12 +72,12 @@ enum PharmacyRole {
 enum PharmacyStatus {
   @JsonValue('onCreation')
   onCreation,
-  @JsonValue('onHold')
-  onHold,
   @JsonValue('reviewPending')
   reviewPending,
   @JsonValue('accepted')
   accepted,
   @JsonValue('refused')
   refused,
+  @JsonValue('stopped')
+  stopped,
 }
