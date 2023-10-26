@@ -34,4 +34,23 @@ class PharmacyDatasource {
     var accepted = p.where((e) => e.status == PharmacyStatus.accepted).toList();
     return accepted;
   }
+
+  Future<PharmacyModel> updatePharmacyModel(PharmacyModel newModel) async {
+    await FirebaseFirestore.instance
+        .collection(Collections.pharmacies)
+        .doc(newModel.id)
+        .set(newModel.toJson());
+
+    return newModel;
+  }
+
+  Future<PharmacyModel?> updatePharmacyStatus(
+    String pharmacyId,
+    PharmacyStatus status,
+  ) async {
+    var model = await getPharmacyById(pharmacyId);
+    if (model == null) return null;
+    model.status = status;
+    return updatePharmacyModel(model);
+  }
 }

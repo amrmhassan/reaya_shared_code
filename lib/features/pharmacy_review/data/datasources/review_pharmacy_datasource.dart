@@ -22,12 +22,22 @@ class ReviewPharmacyDatasource {
         .doc(pharmacyId)
         .set(model.toJson());
     // sending notifications
-    await sendAdminNotifications();
+    await _sendAdminNotifications();
     // updating the pharmacy status
     await updatePharmacyStatus(pharmacyId, PharmacyStatus.reviewPending);
   }
 
-  Future<void> sendAdminNotifications() async {
+  Future<List<ReviewPharmacyModel>> loadPharmacyRequests() async {
+    var docs = (await FirebaseFirestore.instance
+            .collection(Collections.pharmacyReviews)
+            .get())
+        .docs;
+    var models =
+        docs.map((e) => ReviewPharmacyModel.fromJson(e.data())).toList();
+    return models;
+  }
+
+  Future<void> _sendAdminNotifications() async {
     UserDatasource userDatasource = UserDatasource();
     var admins = await userDatasource.getAdmins();
     for (var admin in admins) {
