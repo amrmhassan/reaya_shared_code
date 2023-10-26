@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dart_id/dart_id.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:reaya_shared_code/features/notifications/send_notification_.dart';
+import 'package:reaya_shared_code/features/notifications/send_notification_api.dart';
 import 'package:reaya_shared_code/features/pharmacy/datasource/pharmacy_datasource.dart';
 import 'package:reaya_shared_code/utils/errors/custom_exception.dart';
 import 'package:reaya_shared_code/init/runt_time_variables.dart';
@@ -141,5 +141,22 @@ class PharmacyRequestsDatasource {
     var models =
         docs.map((e) => PharmacyRequestModel.fromJson(e.data())).toList();
     return models;
+  }
+
+  Future<PharmacyRequestModelState> updateRequestStatus({
+    required String requestId,
+    required RequestModelState state,
+    required String notes,
+  }) async {
+    PharmacyRequestModelState modelState = PharmacyRequestModelState(
+      state: state,
+      statedAt: DateTime.now(),
+      notes: notes,
+    );
+    await FirebaseFirestore.instance
+        .collection(Collections.pharmacyRequests)
+        .doc(requestId)
+        .update({'state': modelState.toJson()});
+    return modelState;
   }
 }

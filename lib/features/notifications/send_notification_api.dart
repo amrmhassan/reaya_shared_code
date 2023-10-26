@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:reaya_shared_code/features/notifications/fcm_tokens_source.dart';
 
 const String _serverKey =
-    'AAAA2vwrzOc:APA91bEj-oNcNDvEHPqtB4G6u5IbFKyIGhmj2DrYBNTVZS9-_NuiPZkLNI56UDxclnBa09dcUm0UDUsLt_WmnzDbjvg6Fi-6PkneFJaqcOUPgZhGRa4ShRV1Qhy2jIXyKC5Zj1wOkb-H';
+    'AAAAS5mjwEw:APA91bEw_vLTK6vpcLykx9zTTUaxQ3p4xcGZOKNBrN2GpAsSRqTJG58q2qfXv4mOjkzSeOjuDTenL0O-Q3gERWwNgpdud7gMaPEngFyh3P30OKxLSR065pomfmlm0wiBru7P73hGHc4y';
 const String _url = 'https://fcm.googleapis.com/fcm/send';
 
 class SendNotificationApi {
@@ -14,6 +14,7 @@ class SendNotificationApi {
     required String body,
     required Map<String, dynamic> payload,
   }) async {
+    //ntqwRVJX33a5acLdwr1RMaNmxbj2
     FCMTokensSource source = FCMTokensSource();
     String? token = await source.getUserFcmToken(userId);
     if (token == null) return;

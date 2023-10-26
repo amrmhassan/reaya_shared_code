@@ -16,9 +16,9 @@ class PharmacyRequestModel {
   final String userId;
   final String pharmacyId;
   final DateTime createdAt;
-  final PharmacyRequestModelState state;
+  PharmacyRequestModelState state;
 
-  const PharmacyRequestModel({
+  PharmacyRequestModel({
     required this.id,
     required this.name,
     required this.phone,

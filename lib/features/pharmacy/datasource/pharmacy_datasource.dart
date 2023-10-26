@@ -19,4 +19,19 @@ class PharmacyDatasource {
     var model = PharmacyModel.fromJson(doc);
     return model;
   }
+
+  Future<List<PharmacyModel>> getAllPharmacies() async {
+    var docs = (await FirebaseFirestore.instance
+            .collection(Collections.pharmacies)
+            .get())
+        .docs;
+    var data = docs.map((e) => PharmacyModel.fromJson(e.data())).toList();
+    return data;
+  }
+
+  Future<List<PharmacyModel>> getActivePharmacies() async {
+    var p = await getAllPharmacies();
+    var accepted = p.where((e) => e.status == PharmacyStatus.accepted).toList();
+    return accepted;
+  }
 }

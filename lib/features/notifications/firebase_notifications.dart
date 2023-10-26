@@ -28,11 +28,12 @@ class FirebaseNotifications {
   Future<String> getFCMToken() async {
     await _firebaseMessaging.requestPermission();
     final fCMToken = await _firebaseMessaging.getToken();
+    init();
     return fCMToken ?? '';
   }
 
-  Future<void> init() async {
-    await getFCMToken();
+  void init() {
+    // await getFCMToken();
     _initPushNotification();
     initLocalNotifications();
   }

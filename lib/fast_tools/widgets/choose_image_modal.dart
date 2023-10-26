@@ -13,11 +13,13 @@ class ChooseImageSourceModal extends StatefulWidget {
   final void Function(File file) addImage;
   final double? maxWidth;
   final double? maxHeight;
+  final String? title;
   const ChooseImageSourceModal({
     super.key,
     required this.addImage,
     this.maxHeight,
     this.maxWidth,
+    this.title,
   });
 
   @override
@@ -50,7 +52,7 @@ class _ChooseImageSourceModalState extends State<ChooseImageSourceModal> {
           SizedBox(
             width: double.infinity,
           ),
-          Text('قم بإضافة صورة'),
+          Text(widget.title ?? 'قم بإضافة صورة'),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
