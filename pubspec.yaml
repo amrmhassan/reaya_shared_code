@@ -15,7 +15,8 @@ dependencies:
   hive_flutter: ^1.1.0
   shared_preferences: ^2.2.1
   shared_code:
-    path: D:/Study And Work/Work/projects/flutter/sheeaka/mobile/shared_code
+    git: 
+      url: https://github.com/amrmhassan/shiaka_shared_code.git
   json_annotation: ^4.8.1
   firebase_auth: ^4.11.0
   dio: ^5.3.3
