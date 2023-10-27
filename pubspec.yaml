@@ -17,6 +17,7 @@ dependencies:
   shared_code:
     git: 
       url: https://github.com/amrmhassan/shiaka_shared_code.git
+      ref: main
   json_annotation: ^4.8.1
   firebase_auth: ^4.11.0
   dio: ^5.3.3
